@@ -1,4 +1,4 @@
-function [Z F Fn]=aptidao3(P, Xmin, Xmax, Ymin, Ymax, N);
+function [Z F Fn]=aptidao(P);
 % Calcula aptidao dos individuos da populacao P
 % Entrada:
 %    P - Matriz binaria representando os individuos de uma geracao
@@ -12,18 +12,19 @@ function [Z F Fn]=aptidao3(P, Xmin, Xmax, Ymin, Ymax, N);
 
 [m n]=size(P);
 
-Nb=N/2;   % Numero de bits por variavel
+Vmin=0; Vmax=60;
+Nb=22;   % Numero de bits por variavel
 aux=1/(2^Nb - 1);
 
 Z=[];
 for i=1:m,
-    X(i)=bina2deci(P(i,1:N/2));
-    Y(i)=bina2deci(P(i,(N/2)+1:N));
+    X(i)=bina2deci(P(i,1:22));
+    Y(i)=bina2deci(P(i,23:44));
     
-    X(i)=Xmin+(Xmax-Xmin)*X(i)*aux;
-    Y(i)=Ymin+(Ymax-Ymin)*Y(i)*aux;
+    X(i)=Vmin+(Vmax-Vmin)*X(i)*aux;
+    Y(i)=Vmin+(Vmax-Vmin)*Y(i)*aux;
     
-    F(i) = 20 + X(i)^2 + Y(i)^2 - 10*(cos((2*pi)*X(i))+cos((2*pi)*Y(i)));
+    F(i)=60*X(i)+100*Y(i)-1.5*X(i)*X(i)-1.5*Y(i)*Y(i)-X(i)*Y(i);
     
     Z=[Z; X(i) Y(i)];
 end
