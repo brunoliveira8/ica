@@ -21,36 +21,40 @@ Ng=50;   % Numero de geracoes
 Xmin=-5, Xmax=5;
 Ymin=-12,Ymax=12; 
 
-%%% Geracao da populacao inicial 
-P=round(rand(M,N));
+for i=1:40
+    tic
+    %%% Geracao da populacao inicial 
+    P=round(rand(M,N));
 
-%%% Calcula fitness da populacao inicial
-[Z F Fn]=aptidao3(P, Xmin, Xmax, Ymin, Ymax, N);  % Retorna a aptida de cada individuo da populacao
+    %%% Calcula fitness da populacao inicial
+    [Z F Fn]=aptidao3(P, Xmin, Xmax, Ymin, Ymax, N);  % Retorna a aptida de cada individuo da populacao
 
-%%% Roda AG por Ng geracoes
-geracao=0,
-% figure(1); plot(Z(:,1),Z(:,2),'ro'); axis([Xmin Xmax Ymin Ymax])
-% pause
-for t=1:Ng,
-    %geracao=t,
-    S=selecao_torneio(P,Fn);
-    P=cruzamento_uniforme(P,S,pc);
-    P=mutacao(P,pm);
-    [Z F Fn]=aptidao3(P, Xmin, Xmax, Ymin, Ymax, N);
-    
-    % Mostra grafico de 10 em 10 geracoes
-%     if ~mod(t,10),
-%         geracao=t,
-%         figure(1); plot(Z(:,1),Z(:,2),'ro');
-%         axis([Xmin Xmax Ymin Ymax])
-%         pause
-%     end
-    
-    [Fmin Imin]=min(F);
-    Z(Imin,:);
-    
-    FminT(t) = Fmin;
-    FmeanT(t) = mean(F);
+    %%% Roda AG por Ng geracoes
+    geracao=0,
+    % figure(1); plot(Z(:,1),Z(:,2),'ro'); axis([Xmin Xmax Ymin Ymax])
+    % pause
+    for t=1:Ng,
+        %geracao=t,
+        S=selecao_torneio(P,Fn);
+        P=cruzamento_uniforme(P,S,pc);
+        P=mutacao(P,pm);
+        [Z F Fn]=aptidao3(P, Xmin, Xmax, Ymin, Ymax, N);
+
+        % Mostra grafico de 10 em 10 geracoes
+    %     if ~mod(t,10),
+    %         geracao=t,
+    %         figure(1); plot(Z(:,1),Z(:,2),'ro');
+    %         axis([Xmin Xmax Ymin Ymax])
+    %         pause
+    %     end
+
+        [Fmin Imin]=min(F);
+        Z(Imin,:);
+
+        FminT(t) = Fmin;
+        FmeanT(t) = mean(F);
+        time(i) = toc;
+    end
 end
 
 Z

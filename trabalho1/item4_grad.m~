@@ -17,7 +17,7 @@ end
 figure;
 plot(1:geracoes+1,v(1,:),'ro'); hold on;
 plot(1:geracoes+1,v(2,:),'b*'); grid;
-axis([1 geracoes -1.5*max(max(v))+0.1 1.5*max(max(v))+0.1]);
-title('Para 500 iterações');
+axis([1 geracoes 0 1.5*max(max(v))+0.1]);
+title()
 xlabel('iteracao (n)');
 ylabel('(x(n), y(n))'); hold off;
