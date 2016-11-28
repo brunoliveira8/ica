@@ -9,13 +9,16 @@
 % Data: 28/11/2016
 
 clear; clc; close all;
+tic;
 
 %%% Parametros do AG
-N=22;    % Tamanho do cromossomo (no. de genes)
+N=40;    % Tamanho do cromossomo (no. de genes)
 Ng=500;   % Numero de geracoes
+Xmin=-5, Xmax=5;
+Ymin=-12,Ymax=12; 
 
 Pbest=round(rand(1,N)); % Gera string inicial e a torna "melhor string"
-[Zbest Fbest]=aptidao2(Pbest);  % Avalia string inicial
+[Zbest Fbest]=aptidao(Pbest, Xmin, Xmax, Ymin, Ymax, N);  % Avalia string inicial
 
 %%% Roda AG por Ng geracoes
 for t=1:Ng,
@@ -30,9 +33,9 @@ for t=1:Ng,
     Pcurr=Pbest;
     Pcurr(pos)=~Pcurr(pos); % mutacao do gene na posicao "pos"
     
-    [Zcurr Fcurr]=aptidao2(Pcurr);  % Avalia nova string
+    [Zcurr Fcurr]=aptidao(Pcurr, Xmin, Xmax, Ymin, Ymax, N);  % Avalia nova string
     
-    if Fcurr>Fbest,
+    if Fcurr<Fbest,
         Pbest=Pcurr; % Se aptidao da nova string eh maior, ela vira "melhor string"
         Fbest=Fcurr;
         Zbest=Zcurr;
@@ -40,7 +43,7 @@ for t=1:Ng,
 end
 
 Zbest, Fbest
-
+toc;
 figure; plot(Aptidao);
 xlabel('Iteration');
 ylabel('Fitness');
