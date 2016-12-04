@@ -1,0 +1,24 @@
+function mi=orientacao(phi)
+%
+% Retorna as pertinências da medida x aos conjuntos fuzzy
+% definidos para a variável linguística POSIÇÃO.
+%
+% Funcoes de pertinencia TRIANGULARES/TRAPEZOIDAS
+%
+% Data: 03/12/2016
+% Autor: Tarcísio Bruno. C Oliveira, baseado no código de Guilherme A. Barreto
+
+% Conjunto de ORIENTAÇÃO A DIREITO-BAIXO
+mi(1) = trapmf(phi, [-90 -90 -30 10]);
+
+% Conjunto de ORIENTAÇÃO A DIREITO-ALTO
+mi(2) = trapmf(phi, [-10 40 40 60]);
+
+% Conjunto de ORIENTAÇÃO A DIREITO-ALTO
+mi(3) = trapmf(phi, [30 55 70 90]);
+
+% Conjunto de ORIENTAÇÃO VERTICAL
+mi(4) = trapmf(phi, [50 60 60 70]);
+
+% Conjunto de POSIÇÕES A DIREITA
+mi(5) = trapmf(phi, [65 90 100 100]);
