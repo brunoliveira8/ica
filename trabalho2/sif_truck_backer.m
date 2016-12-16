@@ -9,30 +9,42 @@
 
 clear; clc; close all;
 
-% Valores medidos de x (POSIÇÃO) e theta (ORIENTAÇÃO)
-x=57;
-phi=43;
+% Valores medidos de x (POSIÇÃO) e phi (ORIENTAÇÃO)
+x=66;
+phi=-8;
 
 %%%%%%%%%%%%
 % ETAPA 1: FUZZIFICACAO
 %%%%%%%%%%%%
 
-mi1=velocidade(x);   % Pertinencias para variavel POSIÇÃO
-mi2=curvatura(phi);     % Pertinencias para variavel CURVATURA
+mi1=posicao(x);   % Pertinencias para variavel POSIÇÃO
+mi2=orientacao(phi);     % Pertinencias para variavel CURVATURA
 
 % Funcoes de Pertinencia (VARIAVEL DE SAIDA)
-y=0:0.1:10;   % Universo de discurso da variavel de saida
+theta=-30:0.1:30;   % Universo de discurso da variavel de saida
 mi_out=[];
-for i=1:length(y),
-	aux=forca_pedal_freio(y(i));
+for i=1:length(theta),
+	aux=direcao(theta(i));
 	mi_out=[mi_out; aux];
 end
+
+figure;
+hold on;
+for i=1:7
+    aux=mi_out';
+    plot(theta, aux(i,:))
+end
+xlabel('Ângulo da Direção');
+title('Conjunto Fuzzy de Saida');
+axis([-30 30 0 1.2])
+hold off;
+
 
 %%%%%%%%%%%%
 % ETAPA 2: AVALIACAO DAS REGRAS FUZZY
 %%%%%%%%%%%%
 
-RULE_OUT=regras(mi1,mi2,mi_out,y);  % Conjuntos fuzzy de saida de todas as regras
+RULE_OUT=regras(mi1,mi2,mi_out,theta);  % Conjuntos fuzzy de saida de todas as regras
 
 %%%%%%%%%%%%
 % ETAPA 3: INFERENCIA FUZZY (AGREGACAO - OR (operador de maximo))
@@ -41,13 +53,13 @@ RULE_OUT=regras(mi1,mi2,mi_out,y);  % Conjuntos fuzzy de saida de todas as regra
 F_OUT=max(RULE_OUT);
 
 figure;
-plot(y,F_OUT);
-xlabel('Forca no pedal de freio');
+plot(theta,F_OUT);
+xlabel('Ângulo da Direção');
 title('Conjunto Fuzzy de Saida Agregado');
-axis([0 10 0 1.2])
+axis([-30 30 0 1.2])
 
 %%%%%%%%%%%%
 % ETAPA 4: DESFUZZIFICACAO (CENTRO DE GRAVIDADE)
 %%%%%%%%%%%%
 
-Y=sum(F_OUT.*y)/sum(F_OUT)
+THETA=sum(F_OUT.*theta)/sum(F_OUT)

@@ -1,13 +1,13 @@
 clear; clc; close all;
 
-x=0:0.1:90;  % Universo de discurso da variavel de interesse
+x=-30:0.1:30;  % Universo de discurso da variavel de interesse
 
 L=length(x); % No. total de medidas da variavel linguistica
 
 M=[];
 for i=1:L,
   %mi=velocidade(x(i));  % pertinencia aos conjuntos fuzzy (velocidade)
-  mi=curvatura(x(i));  % pertinencia aos conjuntos fuzzy (curvatura)
+  mi=direcao(x(i));  % pertinencia aos conjuntos fuzzy (curvatura)
   %mi=forca_pedal_freio(x(i));  % pertinencia aos conjuntos fuzzy (forca no pedal de freio)
   M=[M; mi];
 end
